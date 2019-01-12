@@ -3,7 +3,7 @@
 
 struct Answer
 {
-    bool isRight;
+    bool isRight = false;
     QString text;
 };
 using Answers = QVector<Answer>;

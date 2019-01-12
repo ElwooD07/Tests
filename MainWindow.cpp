@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui.setupUi(this);
     m_ui.btnSkip->setEnabled(false);
     m_ui.btnNext->setEnabled(false);
+    m_ui.lblWrong->setVisible(false);
 }
 
 void MainWindow::on_btnBrowse_clicked()
@@ -72,30 +73,43 @@ void MainWindow::on_btnSkip_clicked()
 
 void MainWindow::on_btnNext_clicked()
 {
-    if (m_curQuestion >= 0)
+    if (m_ui.lblWrong->isVisible())
+    {
+        m_ui.lblWrong->setVisible(false);
+        ProceedOrFinish();
+        return;
+    }
+
+    if (m_curQuestion >= 0 && IsAnswerPicked())
     {
         Question& curQuestion = m_curQuestions[m_curQuestion];
         curQuestion.passed = true;
+
         if (CheckAnswers(curQuestion.answers))
         {
             ++m_answeredQuestions;
+            ProceedOrFinish();
         }
         else
         {
-            QApplication::processEvents();
-            QMessageBox::information(this, windowTitle(), "Ответ неправильный. Неправильные варианты подсвечены.");
+            m_ui.lblWrong->setVisible(true);
         }
         m_ui.lblRightness->setText(QString::number(m_answeredQuestions));
-
-        if (m_answeredQuestions == m_curQuestions.size())
-        {
-            ShowResults();
-        }
-        else
-        {
-            GoToNext();
-        }
     }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Return)
+    {
+        on_btnNext_clicked();
+    }
+    else if (event->key() >= Qt::Key_1 && event->key() <= Qt::Key_9)
+    {
+        SwitchAnswerCheck(event->key() - Qt::Key_0);
+    }
+
+    QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::LoadAllQuestions(const QString& path)
@@ -146,6 +160,18 @@ void MainWindow::PrepareAndShuffleQuestions()
     }
 }
 
+void MainWindow::ProceedOrFinish()
+{
+    if (m_answeredQuestions == m_curQuestions.size())
+    {
+        ShowResults();
+    }
+    else
+    {
+        GoToNext();
+    }
+}
+
 void MainWindow::GoToNext()
 {
     if (m_curQuestion == m_curQuestions.size() - 1 ||
@@ -190,22 +216,41 @@ void MainWindow::LoadQuestion(const Question& question)
     m_ui.answersLayout->addSpacerItem(new QSpacerItem(10,10,QSizePolicy::Preferred, QSizePolicy::Expanding));
 }
 
+void MainWindow::SwitchAnswerCheck(int num)
+{
+    if (num >= 1 && num < m_checks.size())
+    {
+        m_checks.at(num)->setChecked(!m_checks.at(num)->isChecked());
+    }
+}
+
+bool MainWindow::IsAnswerPicked()
+{
+    bool checked = false;
+    for (auto check : m_checks)
+    {
+        checked |= check->isChecked();
+    }
+    return checked;
+}
+
 bool MainWindow::CheckAnswers(const Answers& answers)
 {
     bool right = true;
     for (int i = 0; i < m_checks.size() && i < answers.size(); ++i)
     {
         QCheckBox& check = *m_checks.at(i);
+        check.setEnabled(false);
         if (check.isChecked() != answers.at(i).isRight)
         {
             right = false;
-            QString backStyle("; background-color: ");
-            backStyle += check.isChecked() ? "#cc2020" : "#20cc20";
-            check.setStyleSheet(styleSheet() + backStyle);
-            check.style()->polish(&check);
-            check.style()->unpolish(&check);
-            check.update();
         }
+        QString backStyle("; background-color: ");
+        backStyle += answers.at(i).isRight ? "#20cc20; font-weight: bold" : "#cc2020";
+        check.setStyleSheet(styleSheet() + backStyle);
+        check.style()->polish(&check);
+        check.style()->unpolish(&check);
+        check.update();
     }
     return right;
 }

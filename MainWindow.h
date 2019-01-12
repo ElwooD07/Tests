@@ -19,13 +19,19 @@ class MainWindow : public QMainWindow
         void on_btnSkip_clicked();
         void on_btnNext_clicked();
 
+    protected:
+        void keyPressEvent(QKeyEvent *event);
+
     private:
         void LoadAllQuestions(const QString& path);
         void StartTesting();
         void PrepareAndShuffleQuestions();
+        void ProceedOrFinish();
         void GoToNext();
         bool LoadQuestion(int number);
         void LoadQuestion(const Question& question);
+        void SwitchAnswerCheck(int num);
+        bool IsAnswerPicked();
         bool CheckAnswers(const Answers& answers);
         void ShowResults();
 

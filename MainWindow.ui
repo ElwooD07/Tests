@@ -214,6 +214,9 @@
       </item>
       <item>
        <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string>color: #209920</string>
+        </property>
         <property name="text">
          <string>Правильных ответов:</string>
         </property>
@@ -222,7 +225,7 @@
       <item>
        <widget class="QLabel" name="lblRightness">
         <property name="styleSheet">
-         <string notr="true">color: #105010</string>
+         <string notr="true">color: #209920</string>
         </property>
         <property name="text">
          <string>0</string>
@@ -268,6 +271,42 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
+       <widget class="QPushButton" name="btnNext">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>| Вперед &gt;</string>
+        </property>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblWrong">
+        <property name="styleSheet">
+         <string notr="true">color: #cc2020;</string>
+        </property>
+        <property name="text">
+         <string>Неправильный ответ</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -290,26 +329,6 @@
         </property>
         <property name="text">
          <string>Пропустить</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnNext">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>| Вперед &gt;</string>
         </property>
        </widget>
       </item>
