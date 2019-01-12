@@ -4,14 +4,15 @@
 #include "ui_MainWindow.h"
 #include "Questions.h"
 
-using Checks = QVector<QCheckBox*>;
+class AnswerCheckBox;
+using Checks = QVector<AnswerCheckBox*>;
 
 class MainWindow : public QMainWindow
 {
         Q_OBJECT
 
     public:
-        explicit MainWindow(QWidget *parent = 0);
+        explicit MainWindow(QWidget* parent);
 
     public slots:
         void on_btnBrowse_clicked();
@@ -20,7 +21,7 @@ class MainWindow : public QMainWindow
         void on_btnNext_clicked();
 
     protected:
-        void keyPressEvent(QKeyEvent *event);
+        virtual void keyPressEvent(QKeyEvent *event) override;
 
     private:
         void LoadAllQuestions(const QString& path);
@@ -42,4 +43,5 @@ class MainWindow : public QMainWindow
         Checks m_checks;
         int m_curQuestion = -1;
         int m_answeredQuestions = 0;
+        qreal m_dpiScaleFactor;
 };

@@ -2,13 +2,14 @@
 #include <QtGui>
 #include <QtWidgets>
 #include "MainWindow.h"
+#include "AnswerCheckBox.h"
 
 namespace
 {
     QString LoadFile(const QString& path)
     {
         QFile file(path);
-        if (!file.open(QFile::ReadOnly | QFile::Text)) return false;
+        if (!file.open(QFile::ReadOnly | QFile::Text)) return "";
         QTextStream in(&file);
         return in.readAll();
     }
@@ -33,12 +34,21 @@ namespace
             delete item;
         }
     }
+
+    qreal GetDpiScaleFactor()
+    {
+        QDesktopWidget desktopWidget;
+        QScreen* defScreen = QApplication::screens().at(desktopWidget.primaryScreen());
+        return defScreen->logicalDotsPerInch() / 96; // 96 is a standard DPI for Windows
+    }
 }
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , m_dpiScaleFactor(GetDpiScaleFactor())
 {
     m_ui.setupUi(this);
+    setMinimumSize(minimumSize() * m_dpiScaleFactor);
     m_ui.btnSkip->setEnabled(false);
     m_ui.btnNext->setEnabled(false);
     m_ui.lblWrong->setVisible(false);
@@ -106,7 +116,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     }
     else if (event->key() >= Qt::Key_1 && event->key() <= Qt::Key_9)
     {
-        SwitchAnswerCheck(event->key() - Qt::Key_0);
+        SwitchAnswerCheck(event->key() - Qt::Key_1);
     }
 
     QMainWindow::keyPressEvent(event);
@@ -208,19 +218,18 @@ void MainWindow::LoadQuestion(const Question& question)
     m_ui.lblQuestion->setText(question.text);
     for (int i = 0; i < question.answers.size(); ++i)
     {
-        QCheckBox* check = new QCheckBox(question.answers.at(i).text, m_ui.groupAnswers);
-        check->setMinimumHeight(20);
+        AnswerCheckBox* check = new AnswerCheckBox(m_ui.groupAnswers, i + 1, question.answers.at(i).text, m_dpiScaleFactor);
         m_checks.push_back(check);
         m_ui.answersLayout->addWidget(check);
     }
-    m_ui.answersLayout->addSpacerItem(new QSpacerItem(10,10,QSizePolicy::Preferred, QSizePolicy::Expanding));
+    m_ui.answersLayout->addSpacerItem(new QSpacerItem(10, 10, QSizePolicy::Preferred, QSizePolicy::Expanding));
 }
 
 void MainWindow::SwitchAnswerCheck(int num)
 {
-    if (num >= 1 && num < m_checks.size())
+    if (num >= 0 && num < m_checks.size())
     {
-        m_checks.at(num)->setChecked(!m_checks.at(num)->isChecked());
+        m_checks.at(num)->SwitchCheckedState();
     }
 }
 
@@ -229,7 +238,7 @@ bool MainWindow::IsAnswerPicked()
     bool checked = false;
     for (auto check : m_checks)
     {
-        checked |= check->isChecked();
+        checked |= check->IsChecked();
     }
     return checked;
 }
@@ -239,18 +248,12 @@ bool MainWindow::CheckAnswers(const Answers& answers)
     bool right = true;
     for (int i = 0; i < m_checks.size() && i < answers.size(); ++i)
     {
-        QCheckBox& check = *m_checks.at(i);
-        check.setEnabled(false);
-        if (check.isChecked() != answers.at(i).isRight)
+        AnswerCheckBox& check = *m_checks.at(i);
+        check.EnableSummarizedView(answers.at(i).isRight);
+        if (check.IsChecked() != answers.at(i).isRight)
         {
             right = false;
         }
-        QString backStyle("; background-color: ");
-        backStyle += answers.at(i).isRight ? "#20cc20; font-weight: bold" : "#cc2020";
-        check.setStyleSheet(styleSheet() + backStyle);
-        check.style()->polish(&check);
-        check.style()->unpolish(&check);
-        check.update();
     }
     return right;
 }

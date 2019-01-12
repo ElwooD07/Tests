@@ -66,13 +66,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(815, 450);
+        MainWindow->resize(815, 480);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(0, 0));
+        MainWindow->setMinimumSize(QSize(800, 480));
         MainWindow->setMaximumSize(QSize(100500, 100500));
         MainWindow->setStyleSheet(QStringLiteral("font-size: 11pt; color: #101010"));
         MainWindow->setDocumentMode(false);
@@ -222,7 +222,7 @@ public:
         groupAnswers->setObjectName(QStringLiteral("groupAnswers"));
         groupAnswers->setFlat(false);
         answersLayout = new QVBoxLayout(groupAnswers);
-        answersLayout->setSpacing(9);
+        answersLayout->setSpacing(5);
         answersLayout->setContentsMargins(11, 11, 11, 11);
         answersLayout->setObjectName(QStringLiteral("answersLayout"));
 
@@ -267,10 +267,10 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_3);
 
-        verticalLayout->setStretch(0, 2);
+        verticalLayout->setStretch(0, 1);
         verticalLayout->setStretch(1, 1);
         verticalLayout->setStretch(2, 3);
-        verticalLayout->setStretch(3, 4);
+        verticalLayout->setStretch(3, 5);
         verticalLayout->setStretch(4, 1);
         MainWindow->setCentralWidget(centralWidget);
 

@@ -25,9 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    Questions.cpp
+    Questions.cpp \
+    AnswerCheckBox.cpp
 
 HEADERS  += MainWindow.h \
-    Questions.h
+    Questions.h \
+    AnswerCheckBox.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    AnswerCheckBox.ui
