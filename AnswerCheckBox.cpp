@@ -31,7 +31,10 @@ bool AnswerCheckBox::IsChecked() const
 
 void AnswerCheckBox::SwitchCheckedState()
 {
-    m_ui.wgtCheck->setVisible(!m_ui.wgtCheck->isVisible());
+    if (isEnabled())
+    {
+        m_ui.wgtCheck->setVisible(!m_ui.wgtCheck->isVisible());
+    }
 }
 
 void AnswerCheckBox::EnableSummarizedView(bool wasRight)

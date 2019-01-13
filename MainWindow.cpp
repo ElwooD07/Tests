@@ -132,7 +132,8 @@ void MainWindow::LoadAllQuestions(const QString& path)
     }
     m_allQuestions.swap(questions);
     m_ui.lineEdit->setText(path);
-    m_ui.lblQuestionsTotal->setText(QString::number(m_allQuestions.size()));
+    m_ui.lblQuestionsTotal->setText(QString("/ %1").arg(m_allQuestions.size()));
+    m_ui.lineMaxQuestions->setValidator(new QIntValidator(1, m_allQuestions.size(), this));
     m_ui.btnSkip->setEnabled(true);
     m_ui.btnNext->setEnabled(true);
     StartTesting();
@@ -160,6 +161,7 @@ void MainWindow::PrepareAndShuffleQuestions()
         maxQuestions = m_allQuestions.size();
     }
     m_ui.lineMaxQuestions->setText(QString::number(maxQuestions));
+    m_ui.progressBar->setMaximum(maxQuestions);
 
     std::random_shuffle(m_allQuestions.begin(), m_allQuestions.end());
     m_curQuestions.clear();
@@ -203,7 +205,7 @@ bool MainWindow::LoadQuestion(int number)
         if (!m_curQuestions.at(i).passed)
         {
             m_curQuestion = i;
-            m_ui.lblProgress->setText(QString("%0/%1").arg(m_curQuestion + 1).arg(m_curQuestions.size()));
+            m_ui.progressBar->setValue(m_curQuestion + 1);
             LoadQuestion(m_curQuestions.at(m_curQuestion));
             return true;
         }

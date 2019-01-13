@@ -19,6 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
@@ -33,24 +34,14 @@ public:
     QVBoxLayout *verticalLayout;
     QGroupBox *groupTest;
     QHBoxLayout *horizontalLayout;
-    QHBoxLayout *horizontalLayout_5;
     QPushButton *btnBrowse;
-    QLabel *label_4;
     QLineEdit *lineEdit;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_2;
     QLineEdit *lineMaxQuestions;
-    QHBoxLayout *horizontalLayout_6;
-    QPushButton *btnReload;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label_3;
     QLabel *lblQuestionsTotal;
     QSpacerItem *horizontalSpacer;
-    QLabel *lblProgressTitle;
-    QLabel *lblProgress;
-    QSpacerItem *horizontalSpacer_2;
-    QLabel *label;
-    QLabel *lblRightness;
+    QPushButton *btnReload;
     QGroupBox *groupQuestion;
     QVBoxLayout *verticalLayout_2;
     QLabel *lblQuestion;
@@ -58,15 +49,20 @@ public:
     QVBoxLayout *answersLayout;
     QHBoxLayout *horizontalLayout_3;
     QPushButton *btnNext;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
     QLabel *lblWrong;
-    QSpacerItem *horizontalSpacer_3;
+    QHBoxLayout *horizontalLayout_5;
+    QLabel *label;
+    QLabel *lblRightness;
+    QProgressBar *progressBar;
     QPushButton *btnSkip;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(815, 480);
+        MainWindow->resize(867, 556);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -87,121 +83,69 @@ public:
         groupTest->setFlat(false);
         groupTest->setCheckable(false);
         horizontalLayout = new QHBoxLayout(groupTest);
-        horizontalLayout->setSpacing(6);
+        horizontalLayout->setSpacing(0);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(-1, 0, -1, -1);
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setSpacing(0);
-        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        horizontalLayout_5->setContentsMargins(0, -1, -1, -1);
         btnBrowse = new QPushButton(groupTest);
         btnBrowse->setObjectName(QStringLiteral("btnBrowse"));
+        btnBrowse->setMinimumSize(QSize(0, 0));
 
-        horizontalLayout_5->addWidget(btnBrowse);
-
-        label_4 = new QLabel(groupTest);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        horizontalLayout_5->addWidget(label_4);
+        horizontalLayout->addWidget(btnBrowse);
 
         lineEdit = new QLineEdit(groupTest);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
         lineEdit->setReadOnly(true);
 
-        horizontalLayout_5->addWidget(lineEdit);
-
-
-        horizontalLayout->addLayout(horizontalLayout_5);
+        horizontalLayout->addWidget(lineEdit);
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(0, -1, -1, -1);
+        horizontalLayout_4->setContentsMargins(10, -1, -1, -1);
         label_2 = new QLabel(groupTest);
         label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setMinimumSize(QSize(0, 0));
 
         horizontalLayout_4->addWidget(label_2);
 
         lineMaxQuestions = new QLineEdit(groupTest);
         lineMaxQuestions->setObjectName(QStringLiteral("lineMaxQuestions"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(lineMaxQuestions->sizePolicy().hasHeightForWidth());
         lineMaxQuestions->setSizePolicy(sizePolicy1);
         lineMaxQuestions->setMinimumSize(QSize(0, 0));
         lineMaxQuestions->setMaximumSize(QSize(16777215, 16777215));
+        lineMaxQuestions->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         horizontalLayout_4->addWidget(lineMaxQuestions);
 
+        lblQuestionsTotal = new QLabel(groupTest);
+        lblQuestionsTotal->setObjectName(QStringLiteral("lblQuestionsTotal"));
 
-        horizontalLayout->addLayout(horizontalLayout_4);
+        horizontalLayout_4->addWidget(lblQuestionsTotal);
 
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setSpacing(6);
-        horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, -1, -1, -1);
+        horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer);
+
         btnReload = new QPushButton(groupTest);
         btnReload->setObjectName(QStringLiteral("btnReload"));
         btnReload->setStyleSheet(QStringLiteral("color: #501010"));
 
-        horizontalLayout_6->addWidget(btnReload);
+        horizontalLayout_4->addWidget(btnReload);
 
+        horizontalLayout_4->setStretch(1, 1);
+        horizontalLayout_4->setStretch(3, 10);
 
-        horizontalLayout->addLayout(horizontalLayout_6);
+        horizontalLayout->addLayout(horizontalLayout_4);
 
-        horizontalLayout->setStretch(0, 4);
-        horizontalLayout->setStretch(1, 1);
+        horizontalLayout->setStretch(1, 5);
         horizontalLayout->setStretch(2, 1);
 
         verticalLayout->addWidget(groupTest);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(10, -1, 10, -1);
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-
-        horizontalLayout_2->addWidget(label_3);
-
-        lblQuestionsTotal = new QLabel(centralWidget);
-        lblQuestionsTotal->setObjectName(QStringLiteral("lblQuestionsTotal"));
-
-        horizontalLayout_2->addWidget(lblQuestionsTotal);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer);
-
-        lblProgressTitle = new QLabel(centralWidget);
-        lblProgressTitle->setObjectName(QStringLiteral("lblProgressTitle"));
-
-        horizontalLayout_2->addWidget(lblProgressTitle);
-
-        lblProgress = new QLabel(centralWidget);
-        lblProgress->setObjectName(QStringLiteral("lblProgress"));
-
-        horizontalLayout_2->addWidget(lblProgress);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer_2);
-
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-
-        horizontalLayout_2->addWidget(label);
-
-        lblRightness = new QLabel(centralWidget);
-        lblRightness->setObjectName(QStringLiteral("lblRightness"));
-        lblRightness->setStyleSheet(QStringLiteral("color: #209920"));
-
-        horizontalLayout_2->addWidget(lblRightness);
-
-
-        verticalLayout->addLayout(horizontalLayout_2);
 
         groupQuestion = new QGroupBox(centralWidget);
         groupQuestion->setObjectName(QStringLiteral("groupQuestion"));
@@ -233,11 +177,8 @@ public:
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         btnNext = new QPushButton(centralWidget);
         btnNext->setObjectName(QStringLiteral("btnNext"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(btnNext->sizePolicy().hasHeightForWidth());
-        btnNext->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(btnNext->sizePolicy().hasHeightForWidth());
+        btnNext->setSizePolicy(sizePolicy1);
         QFont font;
         font.setPointSize(11);
         font.setBold(true);
@@ -247,31 +188,65 @@ public:
 
         horizontalLayout_3->addWidget(btnNext);
 
-        lblWrong = new QLabel(centralWidget);
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setMinimumSize(QSize(100, 0));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        lblWrong = new QLabel(widget);
         lblWrong->setObjectName(QStringLiteral("lblWrong"));
         lblWrong->setStyleSheet(QStringLiteral("color: #cc2020;"));
 
-        horizontalLayout_3->addWidget(lblWrong);
+        horizontalLayout_2->addWidget(lblWrong);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_3->addItem(horizontalSpacer_3);
+        horizontalLayout_3->addWidget(widget);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        horizontalLayout_5->setContentsMargins(0, -1, -1, -1);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+
+        horizontalLayout_5->addWidget(label);
+
+        lblRightness = new QLabel(centralWidget);
+        lblRightness->setObjectName(QStringLiteral("lblRightness"));
+        lblRightness->setStyleSheet(QStringLiteral("color: #209920"));
+
+        horizontalLayout_5->addWidget(lblRightness);
+
+        progressBar = new QProgressBar(centralWidget);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setMaximum(0);
+        progressBar->setValue(0);
+        progressBar->setAlignment(Qt::AlignCenter);
+        progressBar->setInvertedAppearance(false);
+
+        horizontalLayout_5->addWidget(progressBar);
+
+
+        horizontalLayout_3->addLayout(horizontalLayout_5);
 
         btnSkip = new QPushButton(centralWidget);
         btnSkip->setObjectName(QStringLiteral("btnSkip"));
-        sizePolicy2.setHeightForWidth(btnSkip->sizePolicy().hasHeightForWidth());
-        btnSkip->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(btnSkip->sizePolicy().hasHeightForWidth());
+        btnSkip->setSizePolicy(sizePolicy1);
 
         horizontalLayout_3->addWidget(btnSkip);
 
+        horizontalLayout_3->setStretch(1, 1);
+        horizontalLayout_3->setStretch(2, 1);
 
         verticalLayout->addLayout(horizontalLayout_3);
 
-        verticalLayout->setStretch(0, 1);
-        verticalLayout->setStretch(1, 1);
-        verticalLayout->setStretch(2, 3);
-        verticalLayout->setStretch(3, 5);
-        verticalLayout->setStretch(4, 1);
+        verticalLayout->setStretch(1, 3);
+        verticalLayout->setStretch(2, 5);
+        verticalLayout->setStretch(3, 1);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -287,23 +262,20 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "\320\242\320\265\321\201\321\202\321\213", nullptr));
         groupTest->setTitle(QApplication::translate("MainWindow", "\320\242\320\265\321\201\321\202", nullptr));
         btnBrowse->setText(QApplication::translate("MainWindow", "\320\222\321\213\320\261\321\200\320\260\321\202\321\214...", nullptr));
-        label_4->setText(QApplication::translate("MainWindow", ":", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "\320\222\320\276\320\277\321\200\320\276\321\201\320\276\320\262:", nullptr));
         lineMaxQuestions->setInputMask(QString());
         lineMaxQuestions->setText(QApplication::translate("MainWindow", "20", nullptr));
+        lblQuestionsTotal->setText(QApplication::translate("MainWindow", "/ 0", nullptr));
         btnReload->setText(QApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\267\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "\320\222\321\201\320\265\320\263\320\276 \320\262\320\276\320\277\321\200\320\276\321\201\320\276\320\262:", nullptr));
-        lblQuestionsTotal->setText(QApplication::translate("MainWindow", "0", nullptr));
-        lblProgressTitle->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\276\320\263\321\200\320\265\321\201\321\201:", nullptr));
-        lblProgress->setText(QApplication::translate("MainWindow", "0/0", nullptr));
-        label->setStyleSheet(QApplication::translate("MainWindow", "color: #209920", nullptr));
-        label->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\260\320\262\320\270\320\273\321\214\320\275\321\213\321\205 \320\276\321\202\320\262\320\265\321\202\320\276\320\262:", nullptr));
-        lblRightness->setText(QApplication::translate("MainWindow", "0", nullptr));
         groupQuestion->setTitle(QApplication::translate("MainWindow", "\320\222\320\276\320\277\321\200\320\276\321\201", nullptr));
         lblQuestion->setText(QString());
         groupAnswers->setTitle(QApplication::translate("MainWindow", "\320\222\320\260\321\200\320\270\320\260\320\275\321\202\321\213 \320\276\321\202\320\262\320\265\321\202\320\260", nullptr));
         btnNext->setText(QApplication::translate("MainWindow", "| \320\222\320\277\320\265\321\200\320\265\320\264 >", nullptr));
         lblWrong->setText(QApplication::translate("MainWindow", "\320\235\320\265\320\277\321\200\320\260\320\262\320\270\320\273\321\214\320\275\321\213\320\271 \320\276\321\202\320\262\320\265\321\202", nullptr));
+        label->setStyleSheet(QApplication::translate("MainWindow", "color: #209920", nullptr));
+        label->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\260\320\262\320\270\320\273\321\214\320\275\321\213\321\205 \320\276\321\202\320\262\320\265\321\202\320\276\320\262:", nullptr));
+        lblRightness->setText(QApplication::translate("MainWindow", "0", nullptr));
+        progressBar->setFormat(QApplication::translate("MainWindow", "\320\237\321\200\320\276\320\263\321\200\320\265\321\201\321\201: %v/%m", nullptr));
         btnSkip->setText(QApplication::translate("MainWindow", "\320\237\321\200\320\276\320\277\321\203\321\201\321\202\320\270\321\202\321\214", nullptr));
     } // retranslateUi
 
