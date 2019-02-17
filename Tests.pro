@@ -26,11 +26,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         MainWindow.cpp \
     Questions.cpp \
-    AnswerCheckBox.cpp
+    AnswerCheckBox.cpp \
+    Questions_Diez.cpp \
+    Questions_Nubered.cpp \
+    Questions_CrLf.cpp \
+    QuestionsUtils.cpp
 
 HEADERS  += MainWindow.h \
     Questions.h \
-    AnswerCheckBox.h
+    AnswerCheckBox.h \
+    Questions_Diez.h \
+    Questions_Nubered.h \
+    Questions_CrLf.h \
+    QuestionsUtils.h
 
 FORMS    += MainWindow.ui \
     AnswerCheckBox.ui
