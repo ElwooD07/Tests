@@ -14,3 +14,15 @@ QString ParseQuestionText(const QVector<QStringRef>& allLines, int firstAnswerLi
     }
     return text;
 }
+
+bool AreLinesEmpty(const QVector<QStringRef>& lines)
+{
+    for (auto& line : lines)
+    {
+        if (!line.isEmpty())
+        {
+            return false;
+        }
+    }
+    return true;
+}

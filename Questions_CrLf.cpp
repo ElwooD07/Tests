@@ -110,14 +110,21 @@ void ParseQuestions_CrLf(const QString& fileContent, Questions& questions)
     {
         if (lines[line].isEmpty())
         {
-            Question question = ParseQuestion(curQuestion);
-            if (!question.IsEmpty())
+            if (curQuestion.size() >= 3)
             {
-                questions.push_back(question);
+                Question question = ParseQuestion(curQuestion);
+                if (!question.IsEmpty())
+                {
+                    questions.push_back(question);
+                }
+                else
+                {
+                    qDebug() << "Can't parse question started at line " << prevQuestLine + 1; // Lines in Notepad++ started from 1
+                }
             }
-            else
+            else if (!AreLinesEmpty(curQuestion))
             {
-                qDebug() << "Can't parse question started at line " << prevQuestLine + 1; // Lines in Notepad++ started from 1
+                qWarning() << "The question started at line " << prevQuestLine + 1 << " is too small";
             }
             prevQuestLine = line;
             curQuestion.clear();
