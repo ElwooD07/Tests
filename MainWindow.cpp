@@ -1,6 +1,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
+#include <random>
 #include "MainWindow.h"
 #include "AnswerCheckBox.h"
 
@@ -163,12 +164,14 @@ void MainWindow::PrepareAndShuffleQuestions()
     m_ui.lineMaxQuestions->setText(QString::number(maxQuestions));
     m_ui.progressBar->setMaximum(maxQuestions);
 
-    std::random_shuffle(m_allQuestions.begin(), m_allQuestions.end());
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::shuffle(m_allQuestions.begin(), m_allQuestions.end(), generator);
     m_curQuestions.clear();
     qCopy(m_allQuestions.begin(), m_allQuestions.begin() + maxQuestions, std::back_inserter(m_curQuestions));
     for (Question& question : m_curQuestions)
     {
-        std::random_shuffle(question.answers.begin(), question.answers.end());
+        std::shuffle(question.answers.begin(), question.answers.end(), generator);
     }
 }
 

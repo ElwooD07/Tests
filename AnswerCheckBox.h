@@ -18,5 +18,6 @@ protected:
 
 private:
     Ui::AnswerCheckBox m_ui;
+    bool m_summarized;
 };
 

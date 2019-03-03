@@ -1,5 +1,6 @@
 #include "AnswerCheckBox.h"
 #include <QMouseEvent>
+#include <QUrl>
 
 namespace
 {
@@ -13,6 +14,7 @@ namespace
 
 AnswerCheckBox::AnswerCheckBox(QWidget *parent, int number, const QString& text, qreal dpiScaleFactor)
     : QWidget(parent)
+    , m_summarized(false)
 {
     m_ui.setupUi(this);
     m_ui.lblNumber->setText(QString("%1.").arg(number));
@@ -31,7 +33,7 @@ bool AnswerCheckBox::IsChecked() const
 
 void AnswerCheckBox::SwitchCheckedState()
 {
-    if (isEnabled())
+    if (!m_summarized)
     {
         m_ui.wgtCheck->setVisible(!m_ui.wgtCheck->isVisible());
     }
@@ -39,13 +41,20 @@ void AnswerCheckBox::SwitchCheckedState()
 
 void AnswerCheckBox::EnableSummarizedView(bool wasRight)
 {
-    setEnabled(false);
+    m_summarized = true;
+
     QString checkStyle("background-color: ");
     checkStyle += wasRight ? "#20cc20" : "#cc2020";
     AppendStyleSheet(m_ui.wgtCheckFrame, checkStyle);
     if (wasRight)
     {
         AppendStyleSheet(this, "font-weight: bold");
+        auto searchLinkTemplate = QString("<a href=\"https://www.google.com/search?q=%1\">%2</a>");
+        auto searchLink = searchLinkTemplate.arg(QUrl::toPercentEncoding(m_ui.lblText->text()).toStdString().c_str(), 1).arg(m_ui.lblText->text(), 2);
+        m_ui.lblText->setText(searchLink);
+        m_ui.lblText->setTextFormat(Qt::RichText);
+        m_ui.lblText->setTextInteractionFlags(Qt::TextBrowserInteraction);
+        m_ui.lblText->setOpenExternalLinks(true);
     }
     update();
 }
